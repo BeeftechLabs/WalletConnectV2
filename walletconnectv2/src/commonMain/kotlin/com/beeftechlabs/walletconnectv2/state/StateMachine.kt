@@ -109,6 +109,25 @@ internal class StateMachine(
                     }
                     is SessionUpdateRequest -> TODO()
                     is SessionUpgradeRequest -> TODO()
+                    
+                    is WCGenericResponse -> TODO()
+                    is SessionRejectResponse -> TODO()
+                    is SessionDeleteResponse -> TODO()
+                    is SessionApproveResponse -> TODO()
+                    is SessionUpgradeResponse -> TODO()
+                    is SessionUpdateResponse -> TODO()
+                    is SessionNotificationResponse -> TODO()
+                    is PairingNotificationResponse -> TODO()
+                    is PairingDeleteResponse -> TODO()
+                    is PairingRejectResponse -> TODO()
+                    is PairingUpgradeResponse -> TODO()
+                    is PairingUpdateResponse -> TODO()
+                    is PairingPayloadResponse -> TODO()
+                    is SessionProposeResponse -> TODO()
+                    is PairingApproveResponse -> TODO()
+                    is SessionPayloadResponse -> TODO()
+                    is SessionPingResponse -> TODO()
+                    is PairingPingResponse -> TODO()
                 }
             }
         }

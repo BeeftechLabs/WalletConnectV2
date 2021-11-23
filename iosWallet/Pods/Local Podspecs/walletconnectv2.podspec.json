@@ -1,0 +1,30 @@
+{
+  "name": "walletconnectv2",
+  "version": "1.0",
+  "homepage": "https://beeftechlabs.com",
+  "source": {
+    "git": "Not Published",
+    "tag": "Cocoapods/walletconnectv2/1.0"
+  },
+  "authors": "",
+  "license": "",
+  "summary": "WalletConnectV2 Kotlin Multiplatform implementation for Android, iOS and JS",
+  "vendored_frameworks": "build/cocoapods/framework/walletconnectv2.framework",
+  "libraries": "c++",
+  "module_name": "walletconnectv2_umbrella",
+  "platforms": {
+    "ios": "14.1"
+  },
+  "pod_target_xcconfig": {
+    "KOTLIN_PROJECT_PATH": ":walletconnectv2",
+    "PRODUCT_MODULE_NAME": "walletconnectv2"
+  },
+  "script_phases": [
+    {
+      "name": "Build walletconnectv2",
+      "execution_position": "before_compile",
+      "shell_path": "/bin/sh",
+      "script": "                if [ \"YES\" = \"$COCOAPODS_SKIP_KOTLIN_BUILD\" ]; then\n                  echo \"Skipping Gradle build task invocation due to COCOAPODS_SKIP_KOTLIN_BUILD environment variable set to \"YES\"\"\n                  exit 0\n                fi\n                set -ev\n                REPO_ROOT=\"$PODS_TARGET_SRCROOT\"\n                \"$REPO_ROOT/../gradlew\" -p \"$REPO_ROOT\" $KOTLIN_PROJECT_PATH:syncFramework                     -Pkotlin.native.cocoapods.platform=$PLATFORM_NAME                     -Pkotlin.native.cocoapods.archs=\"$ARCHS\"                     -Pkotlin.native.cocoapods.configuration=$CONFIGURATION\n"
+    }
+  ]
+}

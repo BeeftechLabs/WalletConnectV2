@@ -1,0 +1,548 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 50;
+	objects = {
+
+/* Begin PBXAggregateTarget section */
+		22A862D35E7B8900AC412B10B588E04D /* walletconnectv2 */ = {
+			isa = PBXAggregateTarget;
+			buildConfigurationList = 08602A9F6DD0BBB08250A18068282EF7 /* Build configuration list for PBXAggregateTarget "walletconnectv2" */;
+			buildPhases = (
+				3C67084375FD9862B996CBE139AE6557 /* [CP-User] Build walletconnectv2 */,
+			);
+			dependencies = (
+			);
+			name = walletconnectv2;
+		};
+/* End PBXAggregateTarget section */
+
+/* Begin PBXBuildFile section */
+		638BC87735640DB9C353396521D17344 /* Pods-iosWallet-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = A76BDB86FB6F17AD48239BDF97D46A92 /* Pods-iosWallet-dummy.m */; };
+		A0536515C61A92DE8C44C1C8823DB6F9 /* Pods-iosWallet-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 71A5385F87B84568D4B0064236520B0C /* Pods-iosWallet-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		A10B3E2A80DB3FBFFA2137182755C648 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73010CC983E3809BECEE5348DA1BB8C6 /* Foundation.framework */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		E095278500BA82416ED63B44A5C6D70F /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 22A862D35E7B8900AC412B10B588E04D;
+			remoteInfo = walletconnectv2;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		0143A33057F67F5DF6A54547EEBFADDD /* Pods-iosWallet.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-iosWallet.release.xcconfig"; sourceTree = "<group>"; };
+		0426DEA364F2706C7F0BD301920A2C25 /* Pods-iosWallet.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "Pods-iosWallet.modulemap"; sourceTree = "<group>"; };
+		09A7F216BC3C773BF3C062B190A92C07 /* walletconnectv2.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = walletconnectv2.release.xcconfig; sourceTree = "<group>"; };
+		0E8BEF84E4AFF0CA7ADDC34F12218BD5 /* Pods-iosWallet-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-iosWallet-acknowledgements.markdown"; sourceTree = "<group>"; };
+		0ECC2579BEEEE9099AB4DE20CDC13ED0 /* Pods-iosWallet.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-iosWallet.debug.xcconfig"; sourceTree = "<group>"; };
+		2486DCCEE31B4DE953FF6E2099451B56 /* Pods-iosWallet-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-iosWallet-acknowledgements.plist"; sourceTree = "<group>"; };
+		25885CAC9DB759B768BCF37A77E68903 /* walletconnectv2.podspec */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; lastKnownFileType = text; path = walletconnectv2.podspec; sourceTree = "<group>"; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		285E1D1711042204609AAF358FE63706 /* walletconnectv2.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = walletconnectv2.debug.xcconfig; sourceTree = "<group>"; };
+		62726AA0312071B10524FE1B165A90F6 /* walletconnectv2.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = walletconnectv2.framework; path = build/cocoapods/framework/walletconnectv2.framework; sourceTree = "<group>"; };
+		71A5385F87B84568D4B0064236520B0C /* Pods-iosWallet-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-iosWallet-umbrella.h"; sourceTree = "<group>"; };
+		73010CC983E3809BECEE5348DA1BB8C6 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS14.0.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
+		97F03C3CF44A2DD5FF8AA346568DB06B /* Pods-iosWallet */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = "Pods-iosWallet"; path = Pods_iosWallet.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		9D940727FF8FB9C785EB98E56350EF41 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; lastKnownFileType = text; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		A76BDB86FB6F17AD48239BDF97D46A92 /* Pods-iosWallet-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-iosWallet-dummy.m"; sourceTree = "<group>"; };
+		F22371E27A589ECA90316E902F179FCC /* Pods-iosWallet-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-iosWallet-Info.plist"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		AC2483DBA6AB5CBB03FD53CF673502BB /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A10B3E2A80DB3FBFFA2137182755C648 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		18C3A8D09EA95ED37EAF4BADC27F2205 /* Targets Support Files */ = {
+			isa = PBXGroup;
+			children = (
+				1FBB2851F7ED722F0155DA13125D2F7D /* Pods-iosWallet */,
+			);
+			name = "Targets Support Files";
+			sourceTree = "<group>";
+		};
+		1FBB2851F7ED722F0155DA13125D2F7D /* Pods-iosWallet */ = {
+			isa = PBXGroup;
+			children = (
+				0426DEA364F2706C7F0BD301920A2C25 /* Pods-iosWallet.modulemap */,
+				0E8BEF84E4AFF0CA7ADDC34F12218BD5 /* Pods-iosWallet-acknowledgements.markdown */,
+				2486DCCEE31B4DE953FF6E2099451B56 /* Pods-iosWallet-acknowledgements.plist */,
+				A76BDB86FB6F17AD48239BDF97D46A92 /* Pods-iosWallet-dummy.m */,
+				F22371E27A589ECA90316E902F179FCC /* Pods-iosWallet-Info.plist */,
+				71A5385F87B84568D4B0064236520B0C /* Pods-iosWallet-umbrella.h */,
+				0ECC2579BEEEE9099AB4DE20CDC13ED0 /* Pods-iosWallet.debug.xcconfig */,
+				0143A33057F67F5DF6A54547EEBFADDD /* Pods-iosWallet.release.xcconfig */,
+			);
+			name = "Pods-iosWallet";
+			path = "Target Support Files/Pods-iosWallet";
+			sourceTree = "<group>";
+		};
+		463967F92F7825D6F8BACDDECFB643B6 /* Development Pods */ = {
+			isa = PBXGroup;
+			children = (
+				5825540916454CFA858C4324C1E51E6C /* walletconnectv2 */,
+			);
+			name = "Development Pods";
+			sourceTree = "<group>";
+		};
+		4B88E5FBA37014A2CD0EAB479CD78466 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				62726AA0312071B10524FE1B165A90F6 /* walletconnectv2.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		578452D2E740E91742655AC8F1636D1F /* iOS */ = {
+			isa = PBXGroup;
+			children = (
+				73010CC983E3809BECEE5348DA1BB8C6 /* Foundation.framework */,
+			);
+			name = iOS;
+			sourceTree = "<group>";
+		};
+		5825540916454CFA858C4324C1E51E6C /* walletconnectv2 */ = {
+			isa = PBXGroup;
+			children = (
+				4B88E5FBA37014A2CD0EAB479CD78466 /* Frameworks */,
+				FEF35C972E383A5C9FC0C9439F990D11 /* Pod */,
+				B80C60532617CE293FD68B13CB11F096 /* Support Files */,
+			);
+			name = walletconnectv2;
+			path = ../../walletconnectv2;
+			sourceTree = "<group>";
+		};
+		AA48852E273563C78B4AF35B89D0700F /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				97F03C3CF44A2DD5FF8AA346568DB06B /* Pods-iosWallet */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		B80C60532617CE293FD68B13CB11F096 /* Support Files */ = {
+			isa = PBXGroup;
+			children = (
+				285E1D1711042204609AAF358FE63706 /* walletconnectv2.debug.xcconfig */,
+				09A7F216BC3C773BF3C062B190A92C07 /* walletconnectv2.release.xcconfig */,
+			);
+			name = "Support Files";
+			path = "../iosWallet/Pods/Target Support Files/walletconnectv2";
+			sourceTree = "<group>";
+		};
+		CF1408CF629C7361332E53B88F7BD30C = {
+			isa = PBXGroup;
+			children = (
+				9D940727FF8FB9C785EB98E56350EF41 /* Podfile */,
+				463967F92F7825D6F8BACDDECFB643B6 /* Development Pods */,
+				D210D550F4EA176C3123ED886F8F87F5 /* Frameworks */,
+				AA48852E273563C78B4AF35B89D0700F /* Products */,
+				18C3A8D09EA95ED37EAF4BADC27F2205 /* Targets Support Files */,
+			);
+			sourceTree = "<group>";
+		};
+		D210D550F4EA176C3123ED886F8F87F5 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				578452D2E740E91742655AC8F1636D1F /* iOS */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		FEF35C972E383A5C9FC0C9439F990D11 /* Pod */ = {
+			isa = PBXGroup;
+			children = (
+				25885CAC9DB759B768BCF37A77E68903 /* walletconnectv2.podspec */,
+			);
+			name = Pod;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		D2D3F61D1FA6700C79B5C0422BB701BE /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A0536515C61A92DE8C44C1C8823DB6F9 /* Pods-iosWallet-umbrella.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		E63EEE03EFDEF8E4D673BD94FA6F317A /* Pods-iosWallet */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = F8A376B943D33A33B280472D3C9239AB /* Build configuration list for PBXNativeTarget "Pods-iosWallet" */;
+			buildPhases = (
+				D2D3F61D1FA6700C79B5C0422BB701BE /* Headers */,
+				881F02139112C9C42616C62F9FBF0965 /* Sources */,
+				AC2483DBA6AB5CBB03FD53CF673502BB /* Frameworks */,
+				BF848F8A2AE8E088FDF48153008C1A11 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				F1797C34CA8D075B44E63A69FC386D8B /* PBXTargetDependency */,
+			);
+			name = "Pods-iosWallet";
+			productName = Pods_iosWallet;
+			productReference = 97F03C3CF44A2DD5FF8AA346568DB06B /* Pods-iosWallet */;
+			productType = "com.apple.product-type.framework";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		BFDFE7DC352907FC980B868725387E98 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 1240;
+				LastUpgradeCheck = 1240;
+			};
+			buildConfigurationList = 4821239608C13582E20E6DA73FD5F1F9 /* Build configuration list for PBXProject "Pods" */;
+			compatibilityVersion = "Xcode 9.3";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				Base,
+				en,
+			);
+			mainGroup = CF1408CF629C7361332E53B88F7BD30C;
+			productRefGroup = AA48852E273563C78B4AF35B89D0700F /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				E63EEE03EFDEF8E4D673BD94FA6F317A /* Pods-iosWallet */,
+				22A862D35E7B8900AC412B10B588E04D /* walletconnectv2 */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		BF848F8A2AE8E088FDF48153008C1A11 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		3C67084375FD9862B996CBE139AE6557 /* [CP-User] Build walletconnectv2 */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			name = "[CP-User] Build walletconnectv2";
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "                if [ \"YES\" = \"$COCOAPODS_SKIP_KOTLIN_BUILD\" ]; then\n                  echo \"Skipping Gradle build task invocation due to COCOAPODS_SKIP_KOTLIN_BUILD environment variable set to \"YES\"\"\n                  exit 0\n                fi\n                set -ev\n                REPO_ROOT=\"$PODS_TARGET_SRCROOT\"\n                \"$REPO_ROOT/../gradlew\" -p \"$REPO_ROOT\" $KOTLIN_PROJECT_PATH:syncFramework                     -Pkotlin.native.cocoapods.platform=$PLATFORM_NAME                     -Pkotlin.native.cocoapods.archs=\"$ARCHS\"                     -Pkotlin.native.cocoapods.configuration=$CONFIGURATION\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		881F02139112C9C42616C62F9FBF0965 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				638BC87735640DB9C353396521D17344 /* Pods-iosWallet-dummy.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		F1797C34CA8D075B44E63A69FC386D8B /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = walletconnectv2;
+			target = 22A862D35E7B8900AC412B10B588E04D /* walletconnectv2 */;
+			targetProxy = E095278500BA82416ED63B44A5C6D70F /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		23FAE713CDBA13C88D5571694AD3B650 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 09A7F216BC3C773BF3C062B190A92C07 /* walletconnectv2.release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.1;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		593F10BFFA94DAC7D6E17FB8A7F32D72 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"POD_CONFIGURATION_RELEASE=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.1;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRIP_INSTALLED_PRODUCT = NO;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.0;
+				SYMROOT = "${SRCROOT}/../build";
+			};
+			name = Release;
+		};
+		A0374B8CF9A7D6A45F6D116D698D1C19 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"POD_CONFIGURATION_DEBUG=1",
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.1;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRIP_INSTALLED_PRODUCT = NO;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+				SYMROOT = "${SRCROOT}/../build";
+			};
+			name = Debug;
+		};
+		B5CBDA06D9649880298F86B53CBD9C16 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 285E1D1711042204609AAF358FE63706 /* walletconnectv2.debug.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.1;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		BF28793E25218709A2B6163126F26F7D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 0ECC2579BEEEE9099AB4DE20CDC13ED0 /* Pods-iosWallet.debug.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = "Target Support Files/Pods-iosWallet/Pods-iosWallet-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 14.1;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-iosWallet/Pods-iosWallet.modulemap";
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		F35ABDBF49387C685E75F1E07C1F3F4F /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 0143A33057F67F5DF6A54547EEBFADDD /* Pods-iosWallet.release.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = "Target Support Files/Pods-iosWallet/Pods-iosWallet-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 14.1;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-iosWallet/Pods-iosWallet.modulemap";
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		08602A9F6DD0BBB08250A18068282EF7 /* Build configuration list for PBXAggregateTarget "walletconnectv2" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B5CBDA06D9649880298F86B53CBD9C16 /* Debug */,
+				23FAE713CDBA13C88D5571694AD3B650 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		4821239608C13582E20E6DA73FD5F1F9 /* Build configuration list for PBXProject "Pods" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A0374B8CF9A7D6A45F6D116D698D1C19 /* Debug */,
+				593F10BFFA94DAC7D6E17FB8A7F32D72 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		F8A376B943D33A33B280472D3C9239AB /* Build configuration list for PBXNativeTarget "Pods-iosWallet" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				BF28793E25218709A2B6163126F26F7D /* Debug */,
+				F35ABDBF49387C685E75F1E07C1F3F4F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = BFDFE7DC352907FC980B868725387E98 /* Project object */;
+}

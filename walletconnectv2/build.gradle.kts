@@ -1,5 +1,3 @@
-import org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeTarget
-
 plugins {
     kotlin("multiplatform")
     kotlin("native.cocoapods")
@@ -10,26 +8,23 @@ plugins {
 version = "1.0"
 
 val ktorVersion = "1.6.3"
-val kotlinVersion = "1.5.31"
+val kotlinVersion = "1.6.0"
 val multiplatformSettings = "0.8.1"
 
 kotlin {
     android()
-
-    val iosTarget: (String, KotlinNativeTarget.() -> Unit) -> KotlinNativeTarget = when {
-        System.getenv("SDK_NAME")?.startsWith("iphoneos") == true -> ::iosArm64
-        System.getenv("NATIVE_ARCH")?.startsWith("arm") == true -> ::iosSimulatorArm64
-        else -> ::iosX64
-    }
-
-    iosTarget("ios") {}
+    iosX64()
+    iosArm64()
+//    iosSimulatorArm64()
 
     cocoapods {
         summary = "WalletConnectV2 Kotlin Multiplatform implementation for Android, iOS and JS"
         homepage = "https://beeftechlabs.com"
         ios.deploymentTarget = "14.1"
-        frameworkName = "walletconnectv2"
         podfile = project.file("../iosWallet/Podfile")
+        framework {
+            baseName = "walletconnectv2"
+        }
     }
     
     sourceSets {
@@ -85,12 +80,28 @@ kotlin {
                 implementation("junit:junit:4.13.2")
             }
         }
-        val iosMain by getting {
+
+        val iosX64Main by getting
+        val iosArm64Main by getting
+//        val iosSimulatorArm64Main by getting
+        val iosMain by creating {
             dependencies {
                 implementation("io.ktor:ktor-client-ios:$ktorVersion")
             }
+            dependsOn(commonMain)
+            iosX64Main.dependsOn(this)
+            iosArm64Main.dependsOn(this)
+//            iosSimulatorArm64Main.dependsOn(this)
         }
-        val iosTest by getting
+        val iosX64Test by getting
+        val iosArm64Test by getting
+//        val iosSimulatorArm64Test by getting
+        val iosTest by creating {
+            dependsOn(commonTest)
+            iosX64Test.dependsOn(this)
+            iosArm64Test.dependsOn(this)
+//            iosSimulatorArm64Test.dependsOn(this)
+        }
     }
 }
 
