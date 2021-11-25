@@ -31,7 +31,7 @@ class MainDappFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel = ViewModelProvider(this).get(MainDappViewModel::class.java)
+        viewModel = ViewModelProvider(this)[MainDappViewModel::class.java]
 
         binding.connect.setOnClickListener {
             viewModel.connectToWallet()
@@ -47,8 +47,8 @@ class MainDappFragment : Fragment() {
             }
         }
 
-        viewModel.sessionApproved.observe(viewLifecycleOwner) { approved ->
-            Snackbar.make(binding.root, if (approved) "Session approved" else "Session rejected", Snackbar.LENGTH_SHORT).show()
+        viewModel.sessionApproved.observe(viewLifecycleOwner) { (approved, accounts) ->
+            Snackbar.make(binding.root, if (approved) "Session approved for $accounts" else "Session rejected", Snackbar.LENGTH_INDEFINITE).show()
         }
     }
 }

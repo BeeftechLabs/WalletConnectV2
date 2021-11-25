@@ -3,8 +3,7 @@ package com.beeftechlabs.walletconnectv2.crypto
 import com.beeftechlabs.walletconnectv2.logging.Log
 import com.ionspin.kotlin.crypto.LibsodiumInitializer
 import com.ionspin.kotlin.crypto.hash.Hash
-import com.ionspin.kotlin.crypto.scalarmult.ScalarMultiplication
-import com.ionspin.kotlin.crypto.signature.Signature
+import com.ionspin.kotlin.crypto.keyexchange.KeyExchange
 import com.ionspin.kotlin.crypto.util.hexStringToUByteArray
 import com.ionspin.kotlin.crypto.util.toHexString
 
@@ -15,51 +14,67 @@ internal class Crypto(
     suspend fun genNewPublicKey(): String {
         ensureInitialized()
 
-        val lsKeyPair = Signature.keypair()
-        val pubKey = Signature.ed25519PkToCurve25519(lsKeyPair.publicKey).toHexString()
-        val sKey = Signature.ed25519SkToCurve25519(lsKeyPair.secretKey).toHexString()
-
-        cryptoStore.put(pubKey, KeyPair(pubKey, sKey))
+        val keyPair = KeyExchange.keypair()
+        val pubKey = keyPair.publicKey.toHexString()
+        cryptoStore.put(pubKey, KeyPair(pubKey, keyPair.secretKey.toHexString()))
 
         return pubKey
     }
 
-    suspend fun genTopicAndSharedKey(publicKey: String, peerPublicKey: String): KeyPair {
+    suspend fun genTopicAndSharedKey(publicKey: String, peerPublicKey: String, topic: String? = null): KeyPair {
         ensureInitialized()
 
-        val (_, privateKeyHexed) = cryptoStore.get(publicKey)
+        val (_, privateKeyHex) = cryptoStore.get(publicKey)
             ?: throw IllegalArgumentException("No private key for $publicKey")
 
-        Log.d(TAG, "Generating sharedKey from privateKey $privateKeyHexed publicKey $publicKey and peerPublicKey $peerPublicKey")
+        Log.d(TAG, "Generating sharedKey from privateKey $privateKeyHex publicKey $publicKey and peerPublicKey $peerPublicKey")
 
-        val privateKey = privateKeyHexed.hexStringToUByteArray()
+        val privateKey = privateKeyHex.hexStringToUByteArray()
 
-        val sharedKey = ScalarMultiplication.scalarMultiplication(
-            privateKey,
-            peerPublicKey.hexStringToUByteArray()
-        )
+        val lsKeyPair =
+            if (topic == null) {
+                KeyExchange.serverSessionKeys(
+                    publicKey.hexStringToUByteArray(),
+                    privateKey,
+                    peerPublicKey.hexStringToUByteArray()
+                )
+            } else {
+                KeyExchange.clientSessionKeys(
+                    publicKey.hexStringToUByteArray(),
+                    privateKey,
+                    peerPublicKey.hexStringToUByteArray()
+                )
+            }
 
-        val topic = Hash.sha256(sharedKey).toHexString()
+        val recHex = lsKeyPair.receiveKey.toHexString()
+        val sendHex = lsKeyPair.sendKey.toHexString()
+        Log.d(TAG, "genTopicAndSharedKey: rec $recHex send $sendHex")
+
+        val sharedKey = if (topic == null) {
+            lsKeyPair.receiveKey + lsKeyPair.sendKey
+        } else {
+            lsKeyPair.sendKey + lsKeyPair.receiveKey
+        }
 
         val sharedKeyHex = sharedKey.toHexString()
 
         Log.d(TAG, "sharedKey is $sharedKeyHex")
 
-        cryptoStore.put(topic, KeyPair(sharedKeyHex, publicKey))
+        val topic = topic ?: Hash.sha256(sharedKey).toHexString()
+
+        cryptoStore.put(topic, KeyPair(publicKey, sharedKeyHex))
 
         return KeyPair(topic, sharedKeyHex)
     }
 
-    suspend fun getSharedKey(publicKey: String, peerPublicKey: String): String {
-        ensureInitialized()
+    suspend fun getTopicAndSharedKey(publicKey: String, peerPublicKey: String, topic: String): KeyPair {
+        return cryptoStore.get(topic)
+            ?: genTopicAndSharedKey(publicKey, peerPublicKey, topic)
+    }
 
-        val (_, privateKey) = cryptoStore.get(publicKey)
-            ?: throw IllegalArgumentException("No private key for $publicKey")
-
-        return ScalarMultiplication.scalarMultiplication(
-            privateKey.hexStringToUByteArray(),
-            peerPublicKey.hexStringToUByteArray()
-        ).toHexString()
+    fun getTopicAndSharedKey(topic: String): KeyPair {
+        return cryptoStore.get(topic)
+            ?: throw IllegalArgumentException("No private key for $topic")
     }
 
     private suspend fun ensureInitialized() {

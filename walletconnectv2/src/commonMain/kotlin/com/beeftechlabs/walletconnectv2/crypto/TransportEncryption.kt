@@ -32,7 +32,7 @@ internal class TransportEncryption {
         val encrypted =
             AES.encryptAesCbc(data, encryptionKey.toByteArray(), iv.toByteArray(), padding)
 
-        val computedHmac = Auth.authHmacSha512(
+        val computedHmac = Auth.authHmacSha256(
             iv + publicKey.hexStringToUByteArray() + encrypted.toUByteArray(),
             authKey.toUByteArray()
         )
@@ -43,7 +43,9 @@ internal class TransportEncryption {
             iv = iv.toHexString(),
             publicKey = publicKey,
             hmac = computedHmac.toHexString()
-        )
+        ).also {
+            Log.d(TAG, "sharedkey; ivl ${it.iv.length}, pkl ${publicKey.length}, hmacl ${it.hmac.length}")
+        }
     }
 
     fun decrypt(
@@ -55,7 +57,7 @@ internal class TransportEncryption {
         val encrypted = encryptedMessage.cipherText.hexStringToUByteArray()
         val iv = encryptedMessage.iv.hexStringToUByteArray()
 
-        val computedHmac = Auth.authHmacSha512(
+        val computedHmac = Auth.authHmacSha256(
             iv + encryptedMessage.publicKey.hexStringToUByteArray() + encrypted,
             authKey.toUByteArray()
         )

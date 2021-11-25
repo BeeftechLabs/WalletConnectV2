@@ -2,7 +2,6 @@ package com.beeftechlabs.walletconnectv2.state
 
 import com.beeftechlabs.walletconnectv2.WCState
 import com.beeftechlabs.walletconnectv2.crypto.Crypto
-import com.beeftechlabs.walletconnectv2.crypto.KeyPair
 import com.beeftechlabs.walletconnectv2.exception.WCException
 import com.beeftechlabs.walletconnectv2.logging.Log
 import com.beeftechlabs.walletconnectv2.model.*
@@ -47,29 +46,29 @@ internal class StateMachine(
     }
 
     private lateinit var publicKey: String
-    private lateinit var sharedKey: String
+    private lateinit var peerPublicKey: String
     private lateinit var peerTopic: String
 
     init {
-        transport.sharedKeyProvider = { sharedKey }
+        transport.sharedKeyProvider = { topic ->
+            crypto.getTopicAndSharedKey(publicKey, peerPublicKey, topic).privateKey
+        }
 
         launch(exceptionHandler) {
             transport.messages.filter { it.body.isNotEmpty() }.collect { message ->
                 when (val request = messageSerializer.deserialize(message)) {
                     is PairingApproveRequest -> {
                         if (_state.value == WCState.Pairing) {
-                            peerTopic = request.params.topic
+                            this@StateMachine.peerTopic = request.params.topic
+                            this@StateMachine.peerPublicKey = request.params.responder.publicKey
 
                             _state.value = onPairingApprovedUsecase(peerTopic, request)
 
                             // now propose
-                            val (topic, sharedKey) = crypto.genTopicAndSharedKey(
+                            val (topic, _) = crypto.genTopicAndSharedKey(
                                 publicKey,
                                 request.params.responder.publicKey
                             )
-                            this@StateMachine.sharedKey = sharedKey
-
-                            Log.d(TAG, "Setting sharedKey to $sharedKey")
 
                             _state.value = proposeSessionUsecase(
                                 newTopic = topic,
@@ -80,22 +79,22 @@ internal class StateMachine(
                             )
                         }
                     }
-                    is PairingDeleteRequest -> TODO()
-                    is PairingNotificationRequest -> TODO()
-                    is PairingPayloadRequest -> TODO()
-                    is PairingPingRequest -> TODO()
-                    is PairingRejectRequest -> TODO()
-                    is PairingUpdateRequest -> TODO()
-                    is PairingUpgradeRequest -> TODO()
+                    is PairingDeleteRequest -> {}
+                    is PairingNotificationRequest -> {}
+                    is PairingPayloadRequest -> {}
+                    is PairingPingRequest -> {}
+                    is PairingRejectRequest -> {}
+                    is PairingUpdateRequest -> {}
+                    is PairingUpgradeRequest -> {}
                     is SessionApproveRequest -> {
                         if (_state.value is WCState.SessionProposed) {
                             _state.value = onSessionApprovedUsecase(peerTopic, request)
                         }
                     }
-                    is SessionDeleteRequest -> TODO()
-                    is SessionNotificationRequest -> TODO()
-                    is SessionPayloadRequest -> TODO()
-                    is SessionPingRequest -> TODO()
+                    is SessionDeleteRequest -> {}
+                    is SessionNotificationRequest -> {}
+                    is SessionPayloadRequest -> {}
+                    is SessionPingRequest -> {}
                     is SessionProposeRequest -> {
                         if (_state.value == WCState.Paired) {
                             peerTopic = request.params.topic
@@ -107,27 +106,27 @@ internal class StateMachine(
                             _state.value = onSessionRejectedUsecase(peerTopic, request)
                         }
                     }
-                    is SessionUpdateRequest -> TODO()
-                    is SessionUpgradeRequest -> TODO()
+                    is SessionUpdateRequest -> {}
+                    is SessionUpgradeRequest -> {}
                     
-                    is WCGenericResponse -> TODO()
-                    is SessionRejectResponse -> TODO()
-                    is SessionDeleteResponse -> TODO()
-                    is SessionApproveResponse -> TODO()
-                    is SessionUpgradeResponse -> TODO()
-                    is SessionUpdateResponse -> TODO()
-                    is SessionNotificationResponse -> TODO()
-                    is PairingNotificationResponse -> TODO()
-                    is PairingDeleteResponse -> TODO()
-                    is PairingRejectResponse -> TODO()
-                    is PairingUpgradeResponse -> TODO()
-                    is PairingUpdateResponse -> TODO()
-                    is PairingPayloadResponse -> TODO()
-                    is SessionProposeResponse -> TODO()
-                    is PairingApproveResponse -> TODO()
-                    is SessionPayloadResponse -> TODO()
-                    is SessionPingResponse -> TODO()
-                    is PairingPingResponse -> TODO()
+                    is WCGenericResponse -> {}
+                    is SessionRejectResponse -> {}
+                    is SessionDeleteResponse -> {}
+                    is SessionApproveResponse -> {}
+                    is SessionUpgradeResponse -> {}
+                    is SessionUpdateResponse -> {}
+                    is SessionNotificationResponse -> {}
+                    is PairingNotificationResponse -> {}
+                    is PairingDeleteResponse -> {}
+                    is PairingRejectResponse -> {}
+                    is PairingUpgradeResponse -> {}
+                    is PairingUpdateResponse -> {}
+                    is PairingPayloadResponse -> {}
+                    is SessionProposeResponse -> {}
+                    is PairingApproveResponse -> {}
+                    is SessionPayloadResponse -> {}
+                    is SessionPingResponse -> {}
+                    is PairingPingResponse -> {}
                 }
             }
         }
@@ -145,12 +144,11 @@ internal class StateMachine(
         request: PairingApproveRequest,
         topic: String,
         publicKey: String,
-        sharedKey: String
+        peerPublicKey: String
     ) {
         this.publicKey = publicKey
-        this.sharedKey = sharedKey
-        Log.d(TAG, "Setting sharedKey to $sharedKey")
-        peerTopic = topic
+        this.peerTopic = topic
+        this.peerPublicKey = peerPublicKey
 
         transport.subscribe(request.params.topic)
 
@@ -162,6 +160,8 @@ internal class StateMachine(
         proposition: WCState.SessionProposed,
         accounts: List<String>
     ) {
+        val sharedKey = crypto.getTopicAndSharedKey(publicKey, peerPublicKey, peerTopic).privateKey
+
         _state.value = onSessionProposedUsecase.approve(
             peerTopic,
             proposition.request,
@@ -173,6 +173,8 @@ internal class StateMachine(
     }
 
     suspend fun rejectSession(proposition: WCState.SessionProposed, reason: String) {
+        val sharedKey = crypto.getTopicAndSharedKey(publicKey, peerPublicKey, peerTopic).privateKey
+
         _state.value =
             onSessionProposedUsecase.reject(
                 peerTopic,

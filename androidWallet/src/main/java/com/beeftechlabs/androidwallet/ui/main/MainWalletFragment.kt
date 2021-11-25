@@ -8,7 +8,6 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.afollestad.materialdialogs.MaterialDialog
 import com.beeftechlabs.androidwallet.databinding.MainFragmentBinding
-import com.google.android.material.snackbar.Snackbar
 
 class MainWalletFragment : Fragment() {
 
@@ -37,16 +36,15 @@ class MainWalletFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel = ViewModelProvider(this).get(MainWalletViewModel::class.java)
+        viewModel = ViewModelProvider(this)[MainWalletViewModel::class.java]
 
         arguments?.getString(URI)?.let { uri ->
-//            Snackbar.make(binding.root, "Started with uri: $uri", Snackbar.LENGTH_SHORT).show()
             viewModel.onWcUriReceived(uri)
         }
 
         viewModel.sessionRequest.observe(viewLifecycleOwner) { appName ->
             MaterialDialog(requireContext()).show {
-                title(text = "Session Proposed")
+                title(text = appName)
                 message(text = "Do you want to approve the Session?")
                 positiveButton(text = "Approve") {
                     viewModel.approveSession()

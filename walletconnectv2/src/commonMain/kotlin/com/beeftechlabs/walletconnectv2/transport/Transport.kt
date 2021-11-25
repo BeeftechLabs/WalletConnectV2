@@ -28,7 +28,7 @@ internal class Transport {
 
     private val relaySerializer = RelaySerializer()
 
-    var sharedKeyProvider: (() -> String)? = null
+    var sharedKeyProvider: (suspend (String) -> String)? = null
 
     private val messageListener: ((msg: String) -> Unit) = { message ->
         Log.d(TAG, "Received message (raw): $message")
@@ -39,16 +39,22 @@ internal class Transport {
             is RelayPublishRequest -> {}
             is RelaySubscribeRequest -> {}
             is RelaySubscriptionRequest -> {
-                val incomingMessage = relayMessage.params.data.message
-                val wcMessage = if (incomingMessage.startsWith("{")) {
-                    incomingMessage
-                } else {
-                    val sharedKey = sharedKeyProvider?.invoke() ?: throw IllegalArgumentException("Key Provider not set")
-                    transportEncryption.decrypt(EncryptedMessage.fromString(incomingMessage), sharedKey).also {
-                        Log.d(TAG, "Received message (decrypted): $it")
+                coroutineScope.launch {
+                    val incomingMessage = relayMessage.params.data.message
+                    val wcMessage = if (incomingMessage.startsWith("{")) {
+                        incomingMessage
+                    } else {
+                        val sharedKey = sharedKeyProvider?.invoke(relayMessage.params.data.topic)
+                            ?: throw IllegalArgumentException("Key Provider not set")
+                        transportEncryption.decrypt(
+                            EncryptedMessage.fromString(incomingMessage),
+                            sharedKey
+                        ).also {
+                            Log.d(TAG, "Received message (decrypted): $it")
+                        }
                     }
+                    _messages.value = Message(relayMessage.id, wcMessage)
                 }
-                _messages.value = Message(relayMessage.id, wcMessage)
             }
             is RelayUnsubscribeRequest -> {}
             is RelayPublishResponse -> {}

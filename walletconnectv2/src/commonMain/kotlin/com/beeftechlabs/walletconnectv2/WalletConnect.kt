@@ -50,7 +50,7 @@ class WalletConnect(
         val expiry: Long = getTimeMillis() / 1000 + 30 * 24 * 60 * 60
         val peerPublicKey = uri.publickKey
 
-        val (topic, sharedKey) = crypto.genTopicAndSharedKey(publicKey, peerPublicKey)
+        val (topic, _) = crypto.genTopicAndSharedKey(publicKey, peerPublicKey, uri.topic)
 
         val approve = PairingApproveRequest(
             id = Generator.newLongId(),
@@ -63,7 +63,7 @@ class WalletConnect(
             )
         )
 
-        stateMachine.approvePairing(approve, uri.topic, publicKey, sharedKey)
+        stateMachine.approvePairing(approve, uri.topic, publicKey, peerPublicKey)
     }
 
     suspend fun approve(proposition: WCState.SessionProposed, accounts: List<String>) {

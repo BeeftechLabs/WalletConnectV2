@@ -24,8 +24,8 @@ class MainDappViewModel : ViewModel() {
     private val _uri = MutableLiveData<String?>()
     val uri: LiveData<String?> = _uri
 
-    private val _sessionApproved = MutableLiveData<Boolean>()
-    val sessionApproved: LiveData<Boolean> = _sessionApproved
+    private val _sessionApproved = MutableLiveData<Pair<Boolean, List<String>>>()
+    val sessionApproved: LiveData<Pair<Boolean, List<String>>> = _sessionApproved
 
     init {
         viewModelScope.launch {
@@ -36,11 +36,11 @@ class MainDappViewModel : ViewModel() {
                     WCState.Pairing -> {}
                     WCState.PairingFailed -> {}
                     is WCState.SessionApproved -> {
-                        _sessionApproved.postValue(true)
+                        _sessionApproved.postValue(true to state.accounts)
                     }
                     is WCState.SessionProposed -> {}
                     is WCState.SessionRejected -> {
-                        _sessionApproved.postValue(false)
+                        _sessionApproved.postValue(false to emptyList())
                     }
                 }
             }
@@ -50,7 +50,7 @@ class MainDappViewModel : ViewModel() {
     fun connectToWallet() {
        viewModelScope.launch {
            val uri = walletConnect.newConnection(
-               relay = "https://relay.walletconnect.org/?apiKey=5ff02a7817f5b2466723b75c23742530",
+               relay = "https://relay.walletconnect.com/?apiKey=5ff02a7817f5b2466723b75c23742530",
                controller = false
            )
            _uri.postValue(uri.pair)
