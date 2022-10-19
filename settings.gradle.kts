@@ -3,10 +3,18 @@ pluginManagement {
         google()
         gradlePluginPortal()
         mavenCentral()
+        mavenLocal()
     }
 }
 
-rootProject.name = "WalletConnect"
-include(":walletconnectv2")
-include(":androidDapp")
-include(":androidWallet")
+dependencyResolutionManagement {
+    repositories {
+        google()
+        mavenCentral()
+        mavenLocal()
+        maven("https://maven.scijava.org/content/repositories/public/")
+    }
+}
+
+rootProject.name = "walletconnect-kmm"
+include(":walletconnect-kmm")

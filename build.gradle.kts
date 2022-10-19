@@ -1,20 +1,7 @@
-buildscript {
-    repositories {
-        gradlePluginPortal()
-        google()
-        mavenCentral()
-    }
-    dependencies {
-        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:1.6.0")
-        classpath("com.android.tools.build:gradle:7.0.2")
-    }
-}
-
-allprojects {
-    repositories {
-        google()
-        mavenCentral()
-    }
+plugins {
+    //trick: for the same plugin versions in all sub-modules
+    id("com.android.library").version("7.3.1").apply(false)
+    kotlin("multiplatform").version("1.7.10").apply(false)
 }
 
 tasks.register("clean", Delete::class) {
