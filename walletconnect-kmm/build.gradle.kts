@@ -1,6 +1,5 @@
 plugins {
     kotlin("multiplatform")
-    kotlin("native.cocoapods")
     id("com.android.library")
     id("maven-publish")
     kotlin("plugin.serialization") version "1.6.21"
@@ -10,29 +9,39 @@ group = "com.beeftechlabs"
 version = "1.0"
 val artifact = "walletconnect-kmm"
 
-val scarletVersion = "1.0.0"
-
 kotlin {
     android {
         publishLibraryVariants("release", "debug")
     }
 
     listOf(
-        iosX64(),
+        iosX64 {
+            compilations.getByName("main") {
+                val WalletConnect by cinterops.creating {
+                    // Path to .def file
+                    defFile("src/nativeInterop/cinterop/WalletConnect.def")
+
+                    compilerOpts(
+                        "-framework",
+                        "WalletConnect",
+                        "-F/Users/alex/devel/WalletConnectSwiftV2/Build/Release-iphoneos/PackageFrameworks/WalletConnect.framework"
+                    )
+                }
+            }
+
+            binaries.all {
+                // Tell the linker where the framework is located.
+                linkerOpts(
+                    "-framework",
+                    "WalletConnect",
+                    "-F/Users/alex/devel/WalletConnectSwiftV2/Build/Release-iphoneos/PackageFrameworks/WalletConnect.framework"
+                )
+            }
+        },
         iosArm64(),
         iosSimulatorArm64()
     ).forEach {
         it.binaries.framework {
-            baseName = "shared"
-        }
-    }
-
-    cocoapods {
-        summary = "WalletConnect V2 KMM"
-        homepage = ""
-        version = "1.0"
-        ios.deploymentTarget = "14.1"
-        framework {
             baseName = "shared"
         }
     }

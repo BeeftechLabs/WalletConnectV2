@@ -8,13 +8,18 @@ import kotlinx.coroutines.flow.Flow
 expect open class WalletConnect {
     val events: Flow<WCEvent>
 
+    fun init(connectionParams: ConnectionParams)
+
     suspend fun connect(
         namespace: String,
-        connectionParams: ConnectionParams,
         extensions: List<ConnectionParams>
     ): Connection
 
     suspend fun disconnect(topic: String?)
 
-    suspend fun login(address: String, token: String): String?
+    suspend fun login(address: String, token: String): String
+
+    suspend fun signMessage(message: String): String
+
+    suspend fun signTransaction(tx: String): String
 }

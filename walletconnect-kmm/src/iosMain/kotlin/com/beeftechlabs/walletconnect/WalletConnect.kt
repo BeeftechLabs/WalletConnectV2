@@ -9,9 +9,11 @@ actual open class WalletConnect {
     actual val events: Flow<WCEvent>
         get() = TODO("Not yet implemented")
 
+    actual fun init(connectionParams: ConnectionParams) {
+    }
+
     actual suspend fun connect(
         namespace: String,
-        connectionParams: ConnectionParams,
         extensions: List<ConnectionParams>
     ): Connection {
         TODO("Not yet implemented")
@@ -20,7 +22,15 @@ actual open class WalletConnect {
     actual suspend fun disconnect(topic: String?) {
     }
 
-    actual suspend fun login(address: String, token: String): String? {
+    actual suspend fun login(address: String, token: String): String {
+        TODO("Not yet implemented")
+    }
+
+    actual suspend fun signMessage(message: String): String {
+        TODO("Not yet implemented")
+    }
+
+    actual suspend fun signTransaction(tx: String): String {
         TODO("Not yet implemented")
     }
 }

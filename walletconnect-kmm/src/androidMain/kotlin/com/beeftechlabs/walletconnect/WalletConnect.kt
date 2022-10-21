@@ -3,6 +3,8 @@ package com.beeftechlabs.walletconnect
 import android.app.Application
 import android.util.Log
 import com.beeftechlabs.walletconnect.exception.WCNotConnectedException
+import com.beeftechlabs.walletconnect.exception.WCResponseException
+import com.beeftechlabs.walletconnect.exception.WCSignatureException
 import com.beeftechlabs.walletconnect.model.*
 import com.walletconnect.android.RelayClient
 import com.walletconnect.android.connection.ConnectionType
@@ -37,42 +39,36 @@ actual open class WalletConnect(
 
     private val dappDelegate = object : SignClient.DappDelegate {
         override fun onSessionApproved(approvedSession: Sign.Model.ApprovedSession) {
-            // Triggered when Dapp receives the session approval from wallet
             launch {
                 _events.emit(WCEvent.SessionApproved(approvedSession.accounts))
             }
         }
 
         override fun onSessionRejected(rejectedSession: Sign.Model.RejectedSession) {
-            // Triggered when Dapp receives the session rejection from wallet
             launch {
                 _events.emit(WCEvent.SessionRejected(rejectedSession.topic))
             }
         }
 
         override fun onSessionUpdate(updatedSession: Sign.Model.UpdatedSession) {
-            // Triggered when Dapp receives the session update from wallet
             launch {
                 _events.emit(WCEvent.SessionUpdated(updatedSession.topic))
             }
         }
 
         override fun onSessionExtend(session: Sign.Model.Session) {
-            // Triggered when Dapp receives the session extend from wallet
             launch {
                 _events.emit(WCEvent.SessionExtended(session.expiry))
             }
         }
 
         override fun onSessionEvent(sessionEvent: Sign.Model.SessionEvent) {
-            // Triggered when the peer emits events that match the list of events agreed upon session settlement
             launch {
                 _events.emit(WCEvent.SessionEvent(sessionEvent.name, sessionEvent.data))
             }
         }
 
         override fun onSessionDelete(deletedSession: Sign.Model.DeletedSession) {
-            // Triggered when Dapp receives the session delete from wallet
             launch {
                 val topic = if (deletedSession is Sign.Model.DeletedSession.Success) {
                     deletedSession.topic
@@ -84,20 +80,35 @@ actual open class WalletConnect(
         }
 
         override fun onSessionRequestResponse(response: Sign.Model.SessionRequestResponse) {
-            // Triggered when Dapp receives the session request response from wallet
             launch {
-                _events.emit(
-                    WCEvent.Response(
-                        response.method,
-                        response.result.id,
-                        response.result.jsonrpc
+                if (response.result is Sign.Model.JsonRpcResponse.JsonRpcResult) {
+                    _events.emit(
+                        WCEvent.Response(
+                            response.method,
+                            response.result.id,
+                            data = (response.result as Sign.Model.JsonRpcResponse.JsonRpcResult).result
+                        )
                     )
-                )
+                } else {
+                    if (response.result is Sign.Model.JsonRpcResponse.JsonRpcError) {
+                        val msg =
+                            (response.result as Sign.Model.JsonRpcResponse.JsonRpcError).message
+                        _events.emit(
+                            WCEvent.Response(
+                                response.method,
+                                response.result.id,
+                                error = msg
+                            )
+                        )
+                        _events.emit(
+                            WCEvent.Error(WCResponseException(msg))
+                        )
+                    }
+                }
             }
         }
 
         override fun onConnectionStateChange(state: Sign.Model.ConnectionState) {
-            //Triggered whenever the connection state is changed
             launch {
                 _events.emit(WCEvent.ConnectionChanged(state.isAvailable))
             }
@@ -124,7 +135,7 @@ actual open class WalletConnect(
             description = dapp.description,
             url = dapp.url,
             icons = dapp.iconUris,
-            redirect = "kotlin-dapp-wc:/request"
+            redirect = dapp.deepLinkUri
         )
         val init = Sign.Params.Init(relay = RelayClient, metadata = appMetaData)
 
@@ -133,17 +144,22 @@ actual open class WalletConnect(
         }
 
         SignClient.setDappDelegate(dappDelegate)
+
+        Log.d(TAG, "Pairings: ${SignClient.getListOfSettledPairings()}")
+        Log.d(TAG, "Sessions: ${SignClient.getListOfSettledSessions()}")
+    }
+
+    actual fun init(connectionParams: ConnectionParams) {
+        this.connectionParams = connectionParams
     }
 
     actual suspend fun connect(
         namespace: String,
-        connectionParams: ConnectionParams,
         extensions: List<ConnectionParams>
     ): Connection = suspendCoroutine { cont ->
-        this@WalletConnect.connectionParams = connectionParams
 
-        val existingPairingTopic = SignClient.getListOfSettledPairings().firstOrNull()?.topic
-//        val existingPairingTopic = null
+//        val existingPairingTopic = SignClient.getListOfSettledPairings().firstOrNull()?.topic
+        val existingPairingTopic = null
 
         val proposal = namespace to Sign.Model.Namespace.Proposal(
             chains = listOf(connectionParams.chain),
@@ -184,35 +200,54 @@ actual open class WalletConnect(
             SignClient.disconnect(
                 Sign.Params.Disconnect(it)
             ) {}
-        } ?: SignClient.getListOfSettledPairings().forEach { pairing ->
+        } ?: SignClient.getListOfSettledSessions().forEach { session ->
             SignClient.disconnect(
-                Sign.Params.Disconnect(pairing.topic)
+                Sign.Params.Disconnect(session.topic)
             ) {}
         }
     }
 
-    actual suspend fun login(address: String, token: String): String? {
+    actual suspend fun login(address: String, token: String): String {
         val data = Json.encodeToString(Login(token, address))
-        return request(connectionParams.methods.SIGN_LOGIN, data)
+        return request(connectionParams.methods.SIGN_LOGIN, data) ?: throw WCSignatureException()
+    }
+
+    actual suspend fun signMessage(message: String): String {
+        return request(connectionParams.methods.SIGN_MSG, message) ?: throw WCSignatureException()
+    }
+
+    actual suspend fun signTransaction(tx: String): String {
+        return request(connectionParams.methods.SIGN_TX, tx) ?: throw WCSignatureException()
     }
 
     private suspend fun request(method: String, params: String): String? {
+        val topic = SignClient.getListOfSettledSessions().firstOrNull()?.topic
+            ?: throw WCNotConnectedException()
+
+        val request = Sign.Params.Request(
+            sessionTopic = topic,
+            method = method,
+            params = params,
+            connectionParams.chain
+        )
+
+        Log.d(TAG, "Sending request $request")
         val success: Boolean = suspendCoroutine { cont ->
-            val topic = SignClient.getListOfSettledPairings().firstOrNull()?.topic
-                ?: throw WCNotConnectedException()
+            var hadError = false
 
             SignClient.request(
-                Sign.Params.Request(
-                    sessionTopic = topic,
-                    method = method,
-                    params = params,
-                    connectionParams.chain
-                )
+                request
             ) {
+                Log.e(TAG, "Request error", it.throwable)
+                hadError = true
                 cont.resume(false)
             }
-            cont.resume(true)
+            if (!hadError) {
+                cont.resume(true)
+            }
         }
+
+        Log.d(TAG, "Request was successful: $success")
 
         return if (success) {
             _events
@@ -225,6 +260,6 @@ actual open class WalletConnect(
     }
 
     companion object {
-        private const val TAG = "Signer"
+        private const val TAG = "WalletConnect"
     }
 }

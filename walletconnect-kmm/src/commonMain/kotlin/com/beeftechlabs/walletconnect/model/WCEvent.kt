@@ -30,7 +30,8 @@ sealed class WCEvent {
     data class Response(
         val method: String,
         val id: Long,
-        val data: String
+        val data: String? = null,
+        val error: String? = null
     ) : WCEvent()
 
     data class ConnectionChanged(
